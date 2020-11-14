@@ -9,8 +9,8 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    MemoryBookService memoryBookService;
-    @Autowired
+    private MemoryBookService memoryBookService;
+
     public BookController(MemoryBookService memoryBookService){
         this.memoryBookService = memoryBookService;
     }
@@ -22,27 +22,25 @@ public class BookController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Book> books(){
-        return memoryBookService.getList();
+        return memoryBookService.getBooks();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Book getBookById(@PathVariable String id){
-        return memoryBookService.getList().get(Integer.parseInt(id) - 1);
+        return memoryBookService.getBooks().get(Integer.parseInt(id) - 1);
     }
 
     @PostMapping("")
     public void addBook(@RequestBody Book book){
-        book.setId(memoryBookService.getNextId());
-        memoryBookService.setNextId();
-        memoryBookService.getList().add(book);
+      memoryBookService.add(book);
     }
 
     @PutMapping("")
     public void updateBook(@RequestBody Book book){
 
-        if (memoryBookService.getList().size() <= book.getId() - 1){
+        if (memoryBookService.getBooks().size() <= book.getId() - 1){
             Long bookId = book.getId() - 1;
-            memoryBookService.getList().set(bookId.intValue(), book);
+            memoryBookService.getBooks().set(bookId.intValue(), book);
         }
 
 
@@ -50,7 +48,7 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable String id){
-        memoryBookService.getList().remove(Integer.parseInt(id) -1);
+        memoryBookService.getBooks().remove(Integer.parseInt(id) -1);
     }
 
 }

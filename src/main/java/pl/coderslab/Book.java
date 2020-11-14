@@ -1,12 +1,32 @@
 package pl.coderslab;
 
+import org.hibernate.validator.constraints.ISBN;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Pattern(regexp = "\\d{13}")
     private String isbn;
+    @NotNull
+    @Size(min = 3)
     private String title;
+    @NotNull
+    @Size(min = 5)
     private String author;
+    @NotNull
+    @Size(min = 5)
     private String publisher;
+    @NotNull
+    @Size(min = 5)
     private String type;
 
     public Book(){
