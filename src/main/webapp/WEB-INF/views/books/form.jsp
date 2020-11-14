@@ -37,7 +37,7 @@
     <form:input path="type"/>
     <form:errors path="type" cssClass="error"/><br>
     <button type="submit">Wyślij</button>
-    <a href="/admin/books/all">List</a>
 </form:form>
+<a href="/admin/books/all">List</a>
 </body>
 </html>

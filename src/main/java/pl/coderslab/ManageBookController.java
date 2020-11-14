@@ -55,7 +55,7 @@ public class ManageBookController {
     @PostMapping("/addEdit")
     public String addEdit(@Valid Book book, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "books/form";
+            return "/books/form";
         }
         if (book.getId() == null){
             bookService.add(book);
@@ -67,7 +67,14 @@ public class ManageBookController {
     }
 
     @GetMapping("delete/{id}")
-    public String deleteBook(@PathVariable Long id){
+    public String deleteBook(@PathVariable Long id, Model model){
+        model.addAttribute("id", id);
+        return "/books/confirm";
+
+    }
+
+    @GetMapping("/confirm/{id}")
+    public String confirm(@PathVariable Long id){
         bookService.delete(id);
         return "redirect:/admin/books/all";
     }
